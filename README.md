@@ -1,4 +1,4 @@
-# adventofcode
+# Advent of Code
 
 To install dependencies:
 
