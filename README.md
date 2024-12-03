@@ -18,14 +18,14 @@ To update the times in the table below:
 bun run updateTimes {year}
 ```
 
-# Speeds
+# Performances
 
 ## 2024
 
 | Day | Part 1 | Part 2 |
 |-----|--------|--------|
-| 1   | 14 ms | 14 ms |
-| 2   | 15 ms | 16 ms |
-| 3   | 14 ms | 15 ms |
+| 1   | 13 ms | 13 ms |
+| 2   | 16 ms | 22 ms |
+| 3   | 16 ms | 16 ms |
 
 This project was created using `bun init` in bun v1.1.38. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
