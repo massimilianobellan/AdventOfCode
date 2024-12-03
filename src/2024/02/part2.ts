@@ -1,7 +1,5 @@
 const input = await Bun.file('./src/2024/02/input.txt').text()
 
-console.time('day2')
-
 const data = input
   .split('\n')
   .map((row) => row.split(' '))
@@ -52,8 +50,6 @@ const total = data.reduce((prev, curr) => {
 }, 0)
 
 console.log(total)
-
-console.timeEnd('day2')
 
 function deleteEachNumberOnce(arr: number[]) {
   let arrays: number[][] = []

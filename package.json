@@ -5,6 +5,9 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "scripts": {
+    "updateTimes": "bun run ./src/updateTimes.ts"
+  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   }

@@ -1,7 +1,5 @@
 const input = await Bun.file('./src/2024/01/input.txt').text()
 
-console.time('day1')
-
 const list1: number[] = []
 const list2: number[] = []
 
@@ -28,5 +26,3 @@ list1.forEach((list1e, index) => {
 })
 
 console.log(total)
-
-console.timeEnd('day1')

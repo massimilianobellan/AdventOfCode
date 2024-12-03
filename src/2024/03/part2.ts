@@ -1,7 +1,5 @@
 const input = await Bun.file('./src/2024/03/input.txt').text()
 
-console.time('day3')
-
 const intstructions = [
   ...input.matchAll(/(do\(\)|don't\(\))|(mul\(\d+,\d+\))/g),
 ].map((entry) => entry[0])
@@ -21,5 +19,3 @@ const result = enabledInstructions
   .reduce((prev, curr) => prev + curr[0] * curr[1], 0)
 
 console.log(result)
-
-console.timeEnd('day3')
