@@ -11,7 +11,7 @@ for (let i = 0; i < input.length; i++) {
     const letter = straightInput[lengthOfLine * i + j]
     if (letter !== 'X') continue
 
-    if (j < lengthOfLine - 4) {
+    if (j <= lengthOfLine - 4) {
       possibilities.push(getE(lengthOfLine * i + j))
       possibilities.push(getNE(lengthOfLine * i + j))
       possibilities.push(getSE(lengthOfLine * i + j))
