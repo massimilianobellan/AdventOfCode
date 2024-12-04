@@ -24,8 +24,9 @@ bun run updateTimes {year}
 
 | Day | Part 1 | Part 2 |
 |-----|--------|--------|
-| 1   | 13 ms | 13 ms |
-| 2   | 16 ms | 22 ms |
-| 3   | 16 ms | 16 ms |
+| 1   | 15 ms | 14 ms |
+| 2   | 13 ms | 18 ms |
+| 3   | 17 ms | 15 ms |
+| 4   | 15 ms | 12 ms |
 
 This project was created using `bun init` in bun v1.1.38. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

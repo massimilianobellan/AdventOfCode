@@ -3,7 +3,6 @@ const lengthOfLine = input[0].length
 const straightInput = input.join('')
 
 const possibilities: string[] = []
-const straightInputArray = straightInput.split('')
 
 for (let i = 0; i < input.length; i++) {
   const line = input[i].split('')
@@ -25,8 +24,6 @@ for (let i = 0; i < input.length; i++) {
     possibilities.push(getS(lengthOfLine * i + j))
   }
 }
-
-console.log(possibilities)
 
 const onlyXMAS = possibilities.filter((word) => word === 'XMAS')
 
