@@ -7,7 +7,7 @@ const ordering = list1
   .map((e) => e.split('|').map((e) => Number(e)))
 const update = list2.split('\n').map((e) => e.split(',').map((e) => Number(e)))
 
-const validMiddleNumber: number[] = []
+const invalidLines: number[][] = []
 for (let i = 0; i < update.length; i++) {
   let isLineValid = true
   for (let j = 0; j < update[i].length - 1; j++) {
@@ -17,12 +17,15 @@ for (let i = 0; i < update.length; i++) {
       break
     }
   }
-  if (isLineValid) {
-    validMiddleNumber.push(update[i][Math.ceil((update[i].length - 1) / 2)])
+  if (!isLineValid) {
+    invalidLines.push(reOrderLine(update[i]))
   }
 }
 
-const total = validMiddleNumber.reduce((prev, curr) => prev + curr, 0)
+const total = invalidLines.reduce((prev, curr) => {
+  return prev + curr[(curr.length - 1) / 2]
+}, 0)
+
 console.log(total)
 
 function isXBeforeY(x: number, y: number) {
@@ -31,4 +34,15 @@ function isXBeforeY(x: number, y: number) {
   )
   if (!found) return false
   return found[0] === x
+}
+
+function reOrderLine(line: number[]) {
+  return line.sort((a, b) => {
+    const order = ordering.find(
+      (e) => (e[0] === a && e[1] === b) || (e[0] === b && e[1] === a)
+    )
+    if (!order) throw new Error(`Can't find order for ${a} and ${b}`)
+    if (order[0] === a) return -1
+    return 1
+  })
 }
