@@ -58,10 +58,10 @@ class Guard {
   }
 
   async guardPath() {
-    while (guard.x <= this.map[0].length && guard.y <= this.map.length) {
-      this.map[guard.y][guard.x] = 'X'
+    while (this.x <= this.map[0].length && this.y <= this.map.length) {
+      this.map[this.y][this.x] = 'X'
 
-      const nextCoords = guard.getNextCoordinates()
+      const nextCoords = this.getNextCoordinates()
       if (nextCoords.x >= this.map[0].length || nextCoords.y >= this.map.length)
         break
 
@@ -69,10 +69,10 @@ class Guard {
 
       if (facingBlock.includes('#')) {
         this.map[nextCoords.y][nextCoords.x] = '\x1b[36m#\x1b[0m'
-        guard.rotate()
+        this.rotate()
       }
 
-      guard.gotoNextStep()
+      this.gotoNextStep()
       // Animation
       // await this.delay(5);
       // console.clear()
