@@ -1,14 +1,16 @@
-const input = (await Bun.file('./src/2024/06/test.txt').text()).split('\n')
+const input = (await Bun.file('./src/2024/06/input.txt').text()).split('\n')
 
 class Guard {
   x: number
   y: number
   currentDirection: '>' | 'v' | '<' | '^' = '>'
+  map: string[][]
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, map: string[][]) {
     this.x = x
     this.y = y
     this.currentDirection = '^'
+    this.map = map
   }
 
   toString() {
@@ -50,6 +52,47 @@ class Guard {
     this.x = nextCoordinates.x
     this.y = nextCoordinates.y
   }
+
+  async delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+  }
+
+  async guardPath() {
+    while (guard.x <= this.map[0].length && guard.y <= this.map.length) {
+      this.map[guard.y][guard.x] = 'X'
+
+      const nextCoords = guard.getNextCoordinates()
+      if (nextCoords.x >= this.map[0].length || nextCoords.y >= this.map.length)
+        break
+
+      const facingBlock = this.map[nextCoords.y][nextCoords.x]
+
+      if (facingBlock.includes('#')) {
+        this.map[nextCoords.y][nextCoords.x] = '\x1b[36m#\x1b[0m'
+        guard.rotate()
+      }
+
+      guard.gotoNextStep()
+      // Animation
+      // await this.delay(5);
+      // console.clear()
+      // console.log(`\r${this.rejoinMap()}\n\nTotal X: ${this.amountOfX()}`)
+    }
+    console.log(`\r${this.rejoinMap()}\n\nTotal X: ${this.amountOfX() + 1}`)
+  }
+
+  rejoinMap() {
+    const currentMap = this.map
+    currentMap[this.y][this.x] = this.currentDirection
+    return this.map.map((row) => row.join('')).join('\n')
+  }
+
+  amountOfX() {
+    return this.map.reduce((prev, curr) => {
+      const xInRow = curr.filter((cell) => cell === 'X')
+      return prev + xInRow.length
+    }, 0)
+  }
 }
 
 const map = input.map((row) => row.split(''))
@@ -62,28 +105,5 @@ const startPosition = input
   })
   .filter((entry) => entry !== undefined)[0]
 
-const guard = new Guard(startPosition.x, startPosition.y)
-
-while (guard.x <= map[0].length && guard.y <= map.length) {
-  map[guard.y][guard.x] = 'X'
-
-  const nextCoords = guard.getNextCoordinates()
-  if (nextCoords.x >= map[0].length || nextCoords.y >= map.length) break
-
-  const facingBlock = map[nextCoords.y][nextCoords.x]
-
-  if (facingBlock === '#') {
-    guard.rotate()
-  }
-
-  guard.gotoNextStep()
-}
-
-const rejoinedMap = map.map((row) => row.join('')).join('\n')
-const amountOfX = map.reduce((prev, curr) => {
-  const xInRow = curr.filter(cell => cell === 'X')
-  return prev + xInRow.length
-}, 0)
-
-console.log(rejoinedMap)
-console.log(amountOfX)
+const guard = new Guard(startPosition.x, startPosition.y, map)
+await guard.guardPath()
