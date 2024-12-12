@@ -1,8 +1,6 @@
 const input = await Bun.file('./src/2024/09/test.txt').text()
 
-type ArrayType = (number | '.')[]
-
-let data: ArrayType = input
+const data: (number | ".")[] = input
   .split('')
   .map((entry, index) => {
     const numberEntry = Number(entry)
@@ -14,35 +12,51 @@ let data: ArrayType = input
   })
   .flat()
 
-const allIds = [...data].filter((element) => element !== '.')
-let lastId = allIds[allIds.length - 1]
-
-const newData: ArrayType = []
-let index = 0
-while (index < data.length) {
-  if (data[index] !== '.') {
-    newData.push(data[index])
+const reversedData = [...data].reverse()
+const amountOfIds = new Map<number, number>()
+reversedData.forEach((id) => {
+  if (id === '.') return;
+  const amount = amountOfIds.get(id)
+  if (amount === undefined) {
+    amountOfIds.set(id, 1)
   } else {
-    const numberOfSpaces = getSpace(data, index)
-    newData.push(String(numberOfSpaces) + '.')
+    amountOfIds.set(id, amount + 1)
   }
-  index++
+})
+
+for (let [id, amount] of amountOfIds) {
+  //Find space from the start for id
+  console.log(id, getIndexWhereItFits(amount))
 }
+
 
 // const result = newData.reduce((prev, curr, index) => {
 //   return prev + index * Number(curr)
 // }, 0)
 
-console.log(newData)
+console.log(data)
 
 function isEven(number: number) {
   return number % 2 == 0
 }
 
-function getSpace(array: ArrayType, index: number) {
-  let count = 1
-  while (array[index + count] === '.') {
-    count++
+function getIndexWhereItFits(numberToFit: number) {
+  let index: undefined | number = undefined
+  for (let i = 0; i < data.length; i++) {
+    const element = data[i]
+    if (element !== '.') continue;
+
+    let numberOfDots = 0;
+    let nextInLine = data[i + 1]
+    while (nextInLine === '.') {
+      numberOfDots++
+      nextInLine = data[i + 1 + numberOfDots]
+    }
+
+    if (numberOfDots <= numberToFit) {
+      index = i
+      break;
+    }
   }
-  return count
+  return index;
 }
